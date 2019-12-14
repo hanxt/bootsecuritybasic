@@ -16,6 +16,10 @@ spring:
     suffix: .html # 模版后缀名 默认为ftl
     charset: UTF-8 # 文件编码
     template-loader-path: classpath:/templates/
+  security:
+    user:
+      name: admin
+      password: admin
 
 
 logging:
