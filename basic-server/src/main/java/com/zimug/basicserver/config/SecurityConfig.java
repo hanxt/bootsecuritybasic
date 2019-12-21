@@ -1,5 +1,7 @@
 package com.zimug.basicserver.config;
 
+import com.zimug.basicserver.config.auth.MyAuthenticationFailureHandler;
+import com.zimug.basicserver.config.auth.MyAuthenticationSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -9,8 +11,16 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import javax.annotation.Resource;
+
 @Configuration
 public class SecurityConfig  extends WebSecurityConfigurerAdapter {
+
+    @Resource
+    MyAuthenticationSuccessHandler mySuthenticationSuccessHandler;
+
+    @Resource
+    MyAuthenticationFailureHandler myAuthenticationFailureHandler;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -21,7 +31,10 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
                 .usernameParameter("uname")
                 .passwordParameter("pword")
                 .loginProcessingUrl("/login")
-                .defaultSuccessUrl("/index")
+                //.defaultSuccessUrl("/index")
+                //.failureUrl("/login.html")
+                .successHandler(mySuthenticationSuccessHandler)
+                .failureHandler(myAuthenticationFailureHandler)
              .and()
              .authorizeRequests()
                 .antMatchers("/login.html","/login").permitAll()

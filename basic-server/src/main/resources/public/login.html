@@ -3,14 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <title>首页</title>
+    <script src="https://cdn.staticfile.org/jquery/1.12.3/jquery.min.js"></script>
 </head>
 <body>
 <h1>字母哥业务系统登录</h1>
 <form action="/login" method="post">
-    <span>用户名称</span><input type="text" name="uname" /> <br>
-    <span>用户密码</span><input type="password" name="pword" /> <br>
-    <input type="submit" value="登陆">
+    <span>用户名称</span><input type="text" name="uname" id="username"/> <br>
+    <span>用户密码</span><input type="password" name="pword" id="password"/> <br>
+    <input type="button" onclick="login()" value="登陆">
 </form>
+
+
+<script>
+    function login() {
+        var username = $("#username").val();
+        var password = $("#password").val();
+        if (username === "" || password === "") {
+            alert('用户名或密码不能为空');
+            return;
+        }
+        $.ajax({
+            type: "POST",
+            url: "/login",
+            data: {
+                "uname": username,
+                "pword": password
+            },
+            success: function (json) {
+                if(json.isok){
+                    location.href = json.data;
+                }else{
+                    alert(json.message)
+                }
+
+            },
+            error: function (e) {
+                console.log(e.responseText);
+            }
+        });
+    }
+</script>
 
 </body>
 </html>
