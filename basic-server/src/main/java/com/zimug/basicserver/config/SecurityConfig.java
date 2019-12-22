@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -45,7 +46,11 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
                     //.hasAnyAuthority("ROLE_admin")
                 .antMatchers("/syslog").hasAuthority("sys:log")
                 .antMatchers("/sysuser").hasAuthority("sys:user")
-                .anyRequest().authenticated();
+                .anyRequest().authenticated()
+             .and().sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                .invalidSessionUrl("/login.html")
+                .sessionFixation().migrateSession();
 
     }
 

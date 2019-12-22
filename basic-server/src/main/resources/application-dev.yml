@@ -1,6 +1,11 @@
 server:
   port: 8888
-
+  servlet:
+    session:
+      timeout: 10s
+      cookie:
+        http-only: true
+        secure: false
 
 spring:
   jackson:
