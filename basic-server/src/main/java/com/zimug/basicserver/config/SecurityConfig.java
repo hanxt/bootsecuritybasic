@@ -2,6 +2,7 @@ package com.zimug.basicserver.config;
 
 import com.zimug.basicserver.config.auth.MyAuthenticationFailureHandler;
 import com.zimug.basicserver.config.auth.MyAuthenticationSuccessHandler;
+import com.zimug.basicserver.config.auth.MyExpiredSessionStrategy;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -50,7 +51,10 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
              .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 .invalidSessionUrl("/login.html")
-                .sessionFixation().migrateSession();
+                .sessionFixation().migrateSession()
+                .maximumSessions(1)
+                .maxSessionsPreventsLogin(false)
+                .expiredSessionStrategy(new MyExpiredSessionStrategy());
 
     }
 
