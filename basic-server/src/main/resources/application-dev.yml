@@ -12,8 +12,8 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
   datasource:
-    url: jdbc:mysql://192.168.161.3:3306/testdb?useUnicode=true&characterEncoding=utf-8&useSSL=false
-    username: test
+    url: jdbc:mysql://192.168.161.3:3306/devicedb?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: device
     password: 4rfv$RFV
     driver-class-name: com.mysql.jdbc.Driver
   freemarker:
@@ -23,9 +23,6 @@ spring:
     template-loader-path: classpath:/templates/
   security:
     loginType: JSON
-    user:
-      name: admin
-      password: admin
 
 
 logging:
