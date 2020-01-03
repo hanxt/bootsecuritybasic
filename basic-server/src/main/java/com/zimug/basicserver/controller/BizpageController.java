@@ -1,11 +1,20 @@
 package com.zimug.basicserver.controller;
 
+import com.zimug.basicserver.model.PersonDemo;
+import com.zimug.basicserver.service.MethodELService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 public class BizpageController {
+
+    @Resource
+    MethodELService methodELService;
 
     // 登录
     /*@PostMapping("/login")
@@ -34,6 +43,16 @@ public class BizpageController {
     // 具体业务一
     @GetMapping("/biz1")
     public String updateOrder() {
+        //methodELService.findAll();
+        //methodELService.findOne();
+
+        /*List<Integer> ids = new ArrayList<>();
+        ids.add(1);
+        ids.add(2);
+        methodELService.delete(ids,null);*/
+
+        //List<PersonDemo> pds = methodELService.findAllPD();
+
         return "biz1";
     }
 
