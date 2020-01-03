@@ -44,14 +44,16 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
              .and()
              .authorizeRequests()
                 .antMatchers("/login.html","/login").permitAll()
-                .antMatchers("/biz1","/biz2") //需要对外暴露的资源路径
-                .hasAnyAuthority("ROLE_user","ROLE_admin")  //user角色和admin角色都可以访问
+                .antMatchers("/index").authenticated()
+                .anyRequest().access("@rabcService.hasPermission(request,authentication)")
+                /*.antMatchers("/biz1","/biz2") //需要对外暴露的资源路径
+                    .hasAnyAuthority("ROLE_user","ROLE_admin")  //user角色和admin角色都可以访问
                 //.antMatchers("/syslog","/sysuser")
                 //.hasAnyRole("admin")  //admin角色可以访问
                 //.hasAnyAuthority("ROLE_admin")
                 .antMatchers("/syslog").hasAuthority("/syslog")
                 .antMatchers("/sysuser").hasAuthority("/sysuser")
-                .anyRequest().authenticated()
+                .anyRequest().authenticated()*/
              .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 .invalidSessionUrl("/login.html")
