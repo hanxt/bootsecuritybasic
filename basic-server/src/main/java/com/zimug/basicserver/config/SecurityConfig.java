@@ -14,8 +14,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 import javax.annotation.Resource;
+import javax.sql.DataSource;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -30,10 +33,18 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
     @Resource
     MyUserDetailsService myUserDetailsService;
 
+    @Resource
+    private DataSource datasource;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.csrf().disable()
+        http.rememberMe()
+                .rememberMeParameter("remember-me-new")
+                .rememberMeCookieName("remember-me-cookie")
+                .tokenValiditySeconds(2 * 24 * 60 * 60)
+                .tokenRepository(persistentTokenRepository())
+             .and().csrf().disable()
              .formLogin()
                 .loginPage("/login.html")
                 .usernameParameter("uname")
@@ -75,6 +86,15 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
         //将项目中静态资源路径开放出来
         web.ignoring()
            .antMatchers( "/css/**", "/fonts/**", "/img/**", "/js/**");
+    }
+
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository(){
+
+        JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
+        tokenRepository.setDataSource(datasource);
+
+        return tokenRepository;
     }
 
 }
