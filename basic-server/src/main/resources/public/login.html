@@ -10,12 +10,22 @@
 <form action="/login" method="post">
     <span>用户名称</span><input type="text" name="uname" id="username"/> <br>
     <span>用户密码</span><input type="password" name="pword" id="password"/> <br>
+    <span>验证码</span><input type="text" name="captchaCode" id="captchaCode"/>
+    <img src="/kaptcha" id="kaptcha" width="110px" height="40px"/> <br>
     <input type="button" onclick="login()" value="登陆">
     <label><input type="checkbox" name="remember-me" id="remember-me"/>记住密码</label>
 </form>
 
 
 <script>
+    window.onload = function () {
+        var kaptchaImg = document.getElementById("kaptcha");
+
+        kaptchaImg.onclick = function () {
+            kaptchaImg.src = "/kaptcha?" + Math.floor(Math.random() * 100)
+        }
+    };
+
     function login() {
         var username = $("#username").val();
         var password = $("#password").val();
