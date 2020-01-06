@@ -29,6 +29,7 @@
     function login() {
         var username = $("#username").val();
         var password = $("#password").val();
+        var captchaCode = $("#captchaCode").val();
         var rememberMe = $("#remember-me").is(":checked");
         if (username === "" || password === "") {
             alert('用户名或密码不能为空');
@@ -40,6 +41,7 @@
             data: {
                 "uname": username,
                 "pword": password,
+                "captchaCode": captchaCode,
                 "remember-me-new": rememberMe
             },
             success: function (json) {

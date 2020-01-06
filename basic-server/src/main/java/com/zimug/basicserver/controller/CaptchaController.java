@@ -2,6 +2,7 @@ package com.zimug.basicserver.controller;
 
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.zimug.basicserver.config.auth.imagecode.CaptchaImageVO;
+import com.zimug.basicserver.utils.MyContants;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,7 +33,7 @@ public class CaptchaController {
 
         String capText = captchaProducer.createText();
 
-        session.setAttribute("captcha_key",
+        session.setAttribute(MyContants.CAPTCHA_SESSION_KEY,
                 new CaptchaImageVO(capText,2 * 60));
 
         try(ServletOutputStream out = response.getOutputStream()){

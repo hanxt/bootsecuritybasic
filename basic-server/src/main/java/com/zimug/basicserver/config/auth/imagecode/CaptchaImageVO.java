@@ -17,4 +17,8 @@ public class CaptchaImageVO {
     public boolean isExpired(){
         return  LocalDateTime.now().isAfter(expireTime);
     }
+
+    public String getCode() {
+        return code;
+    }
 }
