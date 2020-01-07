@@ -61,7 +61,7 @@ public class CaptchaCodeFilter extends OncePerRequestFilter {
         }
 
         // 3. 获取session池中的验证码谜底
-        CaptchaImageVO codeInSession = (CaptchaImageVO)
+        CaptchaCode codeInSession = (CaptchaCode)
                 session.getAttribute(MyContants.CAPTCHA_SESSION_KEY);
         if(Objects.isNull(codeInSession)) {
             throw new SessionAuthenticationException("验证码不存在");

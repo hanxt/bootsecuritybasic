@@ -67,7 +67,7 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
                 .failureHandler(myAuthenticationFailureHandler)
              .and()
              .authorizeRequests()
-                .antMatchers("/login.html","/login","/kaptcha").permitAll()
+                .antMatchers("/login.html","/login","/kaptcha","/smscode").permitAll()
                 .antMatchers("/index").authenticated()
                 .anyRequest().access("@rabcService.hasPermission(request,authentication)")
              .and().sessionManagement()

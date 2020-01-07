@@ -2,14 +2,14 @@ package com.zimug.basicserver.config.auth.imagecode;
 
 import java.time.LocalDateTime;
 
-public class CaptchaImageVO {
+public class CaptchaCode {
 
     private String code;
 
     private LocalDateTime expireTime;
 
 
-    public CaptchaImageVO(String code,int expireAfterSeconds){
+    public CaptchaCode(String code, int expireAfterSeconds){
         this.code = code;
         this.expireTime = LocalDateTime.now().plusSeconds(expireAfterSeconds);
     }

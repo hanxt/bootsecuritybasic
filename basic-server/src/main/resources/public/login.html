@@ -17,6 +17,15 @@
 </form>
 
 
+<h1>短信登陆</h1>
+<form action="/smslogin" method="post">
+    <span>手机号码：</span><input type="text" name="mobile" id="mobile"> <br>
+    <span>短信验证码：</span><input type="text" name="smsCode" id="smsCode" >
+    <input type="button" onclick="getSmsCode()" value="获取"><br>
+    <input type="button" onclick="smslogin()" value="登陆">
+</form>
+
+
 <script>
     window.onload = function () {
         var kaptchaImg = document.getElementById("kaptcha");
@@ -51,6 +60,26 @@
                     alert(json.message)
                 }
 
+            },
+            error: function (e) {
+                console.log(e.responseText);
+            }
+        });
+    }
+
+    function getSmsCode() {
+        $.ajax({
+            type: "get",
+            url: "/smscode",
+            data: {
+                "mobile": $("#mobile").val()
+            },
+            success: function (json) {
+                if(json.isok){
+                    alert(json.data)
+                }else{
+                    alert(json.message)
+                }
             },
             error: function (e) {
                 console.log(e.responseText);

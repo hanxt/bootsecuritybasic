@@ -13,7 +13,7 @@ public interface MyRBACServiceMapper {
             "LEFT JOIN sys_role r ON r.id = rm.role_id\n" +
             "LEFT JOIN sys_user_role ur ON r.id = ur.role_id\n" +
             "LEFT JOIN sys_user u ON u.id = ur.user_id\n" +
-            "WHERE u.username = #{userId}")
+            "WHERE u.username = #{userId} or u.phone = #{userId}")
     List<String> findUrlsByUserName(@Param("userId") String userId);
 
 
