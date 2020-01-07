@@ -86,6 +86,33 @@
             }
         });
     }
+
+    function smslogin() {
+        var mobile = $("#mobile").val();
+        var smsCode = $("#smsCode").val();
+        if (mobile === "" || smsCode === "") {
+            alert('手机号和短信验证码均不能为空');
+            return;
+        }
+        $.ajax({
+            type: "POST",
+            url: "/smslogin",
+            data: {
+                "mobile": mobile,
+                "smsCode": smsCode
+            },
+            success: function (json) {
+                if(json.isok){
+                    location.href = json.data;
+                }else{
+                    alert(json.message)
+                }
+            },
+            error: function (e) {
+                console.log(e.responseText);
+            }
+        });
+    }
 </script>
 
 </body>

@@ -6,6 +6,7 @@ import com.zimug.basicserver.config.auth.smscode.SmsCode;
 import com.zimug.basicserver.config.exception.AjaxResponse;
 import com.zimug.basicserver.config.exception.CustomException;
 import com.zimug.basicserver.config.exception.CustomExceptionType;
+import com.zimug.basicserver.utils.MyContants;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,7 +43,7 @@ public class SmsController {
         //TODO 调用短信服务提供商的接口发送短信
         log.info(smsCode.getCode()  + "+>" + mobile);
 
-        session.setAttribute("sms_key",smsCode);
+        session.setAttribute(MyContants.SMS_SESSION_KEY,smsCode);
 
         return AjaxResponse.success("短信验证码已经发送");
 
