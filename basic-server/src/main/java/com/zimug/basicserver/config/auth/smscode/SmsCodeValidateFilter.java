@@ -3,14 +3,12 @@ package com.zimug.basicserver.config.auth.smscode;
 import com.zimug.basicserver.config.auth.MyAuthenticationFailureHandler;
 import com.zimug.basicserver.config.auth.MyUserDetails;
 import com.zimug.basicserver.config.auth.MyUserDetailsServiceMapper;
-import com.zimug.basicserver.config.auth.imagecode.CaptchaCode;
 import com.zimug.basicserver.utils.MyContants;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.session.SessionAuthenticationException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.ServletRequestBindingException;
-import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.filter.OncePerRequestFilter;
 

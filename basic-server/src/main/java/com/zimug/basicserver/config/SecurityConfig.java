@@ -2,6 +2,7 @@ package com.zimug.basicserver.config;
 
 import com.zimug.basicserver.config.auth.*;
 import com.zimug.basicserver.config.auth.imagecode.CaptchaCodeFilter;
+import com.zimug.basicserver.config.auth.smscode.SmsCodeSecurityConfig;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -41,6 +42,9 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
     @Resource
     private CaptchaCodeFilter captchaCodeFilter;
 
+    @Resource
+    private SmsCodeSecurityConfig smsCodeSecurityConfig;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
@@ -65,7 +69,7 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
                 //.failureUrl("/login.html")
                 .successHandler(mySuthenticationSuccessHandler)
                 .failureHandler(myAuthenticationFailureHandler)
-             .and()
+             .and().apply(smsCodeSecurityConfig).and()
              .authorizeRequests()
                 .antMatchers("/login.html","/login",
                         "/kaptcha","/smscode","/smslogin").permitAll()
