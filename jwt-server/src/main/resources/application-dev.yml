@@ -1,0 +1,22 @@
+server:
+  port: 8888
+
+spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  datasource:
+    url: jdbc:mysql://192.168.161.3:3306/devicedb?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: device
+    password: 4rfv$RFV
+    driver-class-name: com.mysql.jdbc.Driver
+  security:
+    loginType: JSON
+
+
+logging:
+    config: classpath:log4j2-dev.xml
+
+mybatis:
+    configuration:
+      mapUnderscoreToCamelCase: true
