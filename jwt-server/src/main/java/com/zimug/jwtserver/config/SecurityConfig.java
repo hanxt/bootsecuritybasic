@@ -1,6 +1,7 @@
 package com.zimug.jwtserver.config;
 
 import com.zimug.jwtserver.config.auth.*;
+import com.zimug.jwtserver.config.auth.jwt.JwtAuthenticationTokenFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
@@ -32,11 +34,15 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
     @Resource
     private DataSource datasource;
 
+    @Resource
+    private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.logout()
+        http.addFilterBefore(jwtAuthenticationTokenFilter,UsernamePasswordAuthenticationFilter.class)
+             .logout()
                 .logoutUrl("/signout")
                 //.logoutSuccessUrl("/login.html")
                 .deleteCookies("JSESSIONID")
@@ -52,11 +58,7 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
                 .antMatchers("/index").authenticated()
                 .anyRequest().access("@rabcService.hasPermission(request,authentication)")
              .and().sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-                .invalidSessionUrl("/login.html")
-                .sessionFixation().migrateSession()
-                .maximumSessions(1)
-                .maxSessionsPreventsLogin(false);
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
     }
 
